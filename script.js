@@ -1,3 +1,6 @@
+const englishInput = document.querySelector("#englishInput");
+const morseCodeInput = document.querySelector("#morseCodeInput");
+
 // Following code refers to the translation of English to Morse
 const translateSingleWordEnglishToMorse = (word, dictionary) => {
 
@@ -20,7 +23,7 @@ const translateSingleWordEnglishToMorse = (word, dictionary) => {
     return translatedWord;
 }
 
-export const englishToMorse = (phrase) => {
+const englishToMorse = (phrase) => {
     const morseDict = {
         'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
         'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
@@ -72,7 +75,7 @@ const translateSingleWordMorseToEnglish = (morse, dictionary) => {
     return translated;
 }
 
-export const morseToEnglish = (phrase) => {
+const morseToEnglish = (phrase) => {
     const englishDict = { 
         '.-':     'a',
         '-...':   'b',
@@ -125,3 +128,16 @@ export const morseToEnglish = (phrase) => {
 
     return translatedPhrase;
 }
+
+const handleEnglishToMorseInput = (event) => {
+    const phrase = englishToMorse(event.target.value);
+    morseCodeInput.value = phrase;
+}
+
+const handleMorseToEnglish = (event) => {
+    const phrase = morseToEnglish(event.target.value);
+    englishInput.value = phrase;
+}
+
+englishInput.addEventListener("input", handleEnglishToMorseInput);
+morseCodeInput.addEventListener("input", handleMorseToEnglish);
