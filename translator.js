@@ -1,3 +1,6 @@
+const englishInput = document.querySelector("#englishInput");
+const displayText = document.querySelector("#textDisplay");
+
 const translateSingleWord = (word) => {
     const morseDict = {
         'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
@@ -31,7 +34,7 @@ const translateSingleWord = (word) => {
     return translatedWord;
 }
 
-export const englishToMorse = (phrase) => {
+const englishToMorse = (phrase) => {
 
     const splitPhrase = phrase.split(" ");
 
@@ -48,3 +51,10 @@ export const englishToMorse = (phrase) => {
 
     return translatedPhrase;
 }
+
+const handleInput = (event) => {
+    const phrase = englishToMorse(event.target.value);
+    displayText.innerText = phrase;
+}
+
+englishInput.addEventListener("input", handleInput);
