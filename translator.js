@@ -1,4 +1,4 @@
-export const englishToMorse = (word) => {
+const translateSingleWord = (word) => {
     const morseDict = {
         'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
         'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
@@ -15,10 +15,27 @@ export const englishToMorse = (word) => {
     let translatedWord = "";
 
     for (let i=0; i<word.length; i++) {
-        translatedWord += morseDict[word[i]];
+        translatedWord += morseDict[word[i].toLowerCase()];
+        //seperate letters by space for morse code
+        if (i != word.length-1) translatedWord += " ";
     }
 
     return translatedWord;
 }
 
-englishToMorse("hello");
+export const englishToMorse = (phrase) => {
+
+    const splitPhrase = phrase.split(" ");
+
+    let translatedPhrase = "";
+
+    splitPhrase.forEach((word, index) => {
+        translatedPhrase += translateSingleWord(word);
+        //seperate words by space for morse code
+        if (index != splitPhrase.length-1) translatedPhrase += " / ";
+    });
+
+    return translatedPhrase;
+}
+
+console.log(englishToMorse("hello how are you"));
