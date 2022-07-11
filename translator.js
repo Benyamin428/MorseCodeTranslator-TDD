@@ -1,8 +1,11 @@
 //comment the DOM selectors when testing with Jest
-const englishInput = document.querySelector("#englishInput");
-const morseCodeInput = document.querySelector("#morseCodeInput");
+//const englishInput = document.querySelector("#englishInput");
+//const morseCodeInput = document.querySelector("#morseCodeInput");
 
-const translateSingleWord = (word, dictionary) => {
+
+
+// Following code refers to the translation of English to Morse
+const translateSingleWordEnglishToMorse = (word, dictionary) => {
 
     let translatedWord = "";
 
@@ -23,7 +26,7 @@ const translateSingleWord = (word, dictionary) => {
     return translatedWord;
 }
 
-const englishToMorse = (phrase) => {
+export const englishToMorse = (phrase) => {
     const morseDict = {
         'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
         'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
@@ -42,7 +45,7 @@ const englishToMorse = (phrase) => {
     let translatedPhrase = "";
 
     splitPhrase.forEach((word, index) => {
-        translatedPhrase += translateSingleWord(word, morseDict);
+        translatedPhrase += translateSingleWordEnglishToMorse(word, morseDict);
 
         //seperate words by space for morse code
         if (index != splitPhrase.length-1) {
@@ -53,10 +56,89 @@ const englishToMorse = (phrase) => {
     return translatedPhrase;
 }
 
+// ----------------------------------------------------------------
+
+// Following code refers to the translation of Morse code to English
+
+const translateSingleWordMorseToEnglish = (morse, dictionary) => {
+
+    let translated = "";
+    const morseArray = morse.split(" ");
+
+    morseArray.forEach(morseElement => {
+        if (!dictionary[morseElement]) {
+            //add hashtag for invalid morse code
+            translated = "#";
+        }
+        else {
+            translated += dictionary[morseElement];
+        }
+    })
+
+    return translated;
+}
+
+export const morseToEnglish = (phrase) => {
+    const englishDict = { 
+        '.-':     'a',
+        '-...':   'b',
+        '-.-.':   'c',
+        '-..':    'd',
+        '.':      'e',
+        '..-.':   'f',
+        '--.':    'g',
+        '....':   'h',
+        '..':     'i',
+        '.---':   'j',
+        '-.-':    'k',
+        '.-..':   'l',
+        '--':     'm',
+        '-.':     'n',
+        '---':    'o',
+        '.--.':   'p',
+        '--.-':   'q',
+        '.-.':    'r',
+        '...':    's',
+        '-':      't',
+        '..-':    'u',
+        '...-':   'v',
+        '.--':    'w',
+        '-..-':   'x',
+        '-.--':   'y',
+        '--..':   'z',
+        '.----':  '1',
+        '..---':  '2',
+        '...--':  '3',
+        '....-':  '4',
+        '.....':  '5',
+        '-....':  '6',
+        '--...':  '7',
+        '---..':  '8',
+        '----.':  '9',
+        '-----':  '0',
+      };
+
+    const splitPhrase = phrase.split(" / ");
+
+    let translatedPhrase = "";
+
+    splitPhrase.forEach((morse, index) => {
+        translatedPhrase += translateSingleWordMorseToEnglish(morse, englishDict);
+        if (index != splitPhrase.length-1) {
+            translatedPhrase += " ";
+        }
+    });
+
+    return translatedPhrase;
+}
+
+
 const handleEnglishToMorseInput = (event) => {
     const phrase = englishToMorse(event.target.value);
     morseCodeInput.value = phrase;
 }
 
+console.log(morseToEnglish(".... . .-.. .-.. ---"))
+
 //comment the event listeners when testing
-englishInput.addEventListener("input", handleEnglishToMorseInput);
+//englishInput.addEventListener("input", handleEnglishToMorseInput);
