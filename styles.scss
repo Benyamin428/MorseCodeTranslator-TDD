@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+$font: 'Roboto', sans-serif;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $font;
+}
+
+h1 {
+    text-align: center;
+    padding: 2rem;
+    font-weight: 700;
+}
+
+p {
+    text-align: center;
+    padding: 1rem;
+    font-weight: 400;
+}
+
+.translator {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+
+    .translator__input {
+        padding: 1rem;
+
+        .translator__input-field {
+            padding: 12px 20px;
+        }
+
+    }
+
+}
+
