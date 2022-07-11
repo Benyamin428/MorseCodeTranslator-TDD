@@ -1,7 +1,29 @@
+//comment the DOM selectors when testing with Jest
 const englishInput = document.querySelector("#englishInput");
-const displayText = document.querySelector("#textDisplay");
+const morseCodeInput = document.querySelector("#morseCodeInput");
 
-const translateSingleWord = (word) => {
+const translateSingleWord = (word, dictionary) => {
+
+    let translatedWord = "";
+
+    for (let i=0; i<word.length; i++) {
+        //use hashtag for unrecognised characters
+        if (!dictionary[word[i].toLowerCase()]) {
+            translatedWord += "#";
+        }
+        else {
+            translatedWord += dictionary[word[i].toLowerCase()];
+        }
+        //seperate letters by space for morse code
+        if (i != word.length-1) {
+            translatedWord += " ";
+        }
+    }
+
+    return translatedWord;
+}
+
+const englishToMorse = (phrase) => {
     const morseDict = {
         'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
         'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
@@ -15,33 +37,12 @@ const translateSingleWord = (word) => {
         '9': '----.', '0': '-----', 
     };
 
-    let translatedWord = "";
-
-    for (let i=0; i<word.length; i++) {
-        //use hashtag for unrecognised characters
-        if (!morseDict[word[i].toLowerCase()]) {
-            translatedWord += "#";
-        }
-        else {
-            translatedWord += morseDict[word[i].toLowerCase()];
-        }
-        //seperate letters by space for morse code
-        if (i != word.length-1) {
-            translatedWord += " ";
-        }
-    }
-
-    return translatedWord;
-}
-
-const englishToMorse = (phrase) => {
-
     const splitPhrase = phrase.split(" ");
 
     let translatedPhrase = "";
 
     splitPhrase.forEach((word, index) => {
-        translatedPhrase += translateSingleWord(word);
+        translatedPhrase += translateSingleWord(word, morseDict);
 
         //seperate words by space for morse code
         if (index != splitPhrase.length-1) {
@@ -52,9 +53,10 @@ const englishToMorse = (phrase) => {
     return translatedPhrase;
 }
 
-const handleInput = (event) => {
+const handleEnglishToMorseInput = (event) => {
     const phrase = englishToMorse(event.target.value);
-    displayText.innerText = phrase;
+    morseCodeInput.value = phrase;
 }
 
-englishInput.addEventListener("input", handleInput);
+//comment the event listeners when testing
+englishInput.addEventListener("input", handleEnglishToMorseInput);
