@@ -15,9 +15,17 @@ const translateSingleWord = (word) => {
     let translatedWord = "";
 
     for (let i=0; i<word.length; i++) {
-        translatedWord += morseDict[word[i].toLowerCase()];
+        //use hashtag for unrecognised characters
+        if (!morseDict[word[i].toLowerCase()]) {
+            translatedWord += "#";
+        }
+        else {
+            translatedWord += morseDict[word[i].toLowerCase()];
+        }
         //seperate letters by space for morse code
-        if (i != word.length-1) translatedWord += " ";
+        if (i != word.length-1) {
+            translatedWord += " ";
+        }
     }
 
     return translatedWord;
@@ -31,11 +39,12 @@ export const englishToMorse = (phrase) => {
 
     splitPhrase.forEach((word, index) => {
         translatedPhrase += translateSingleWord(word);
+
         //seperate words by space for morse code
-        if (index != splitPhrase.length-1) translatedPhrase += " / ";
+        if (index != splitPhrase.length-1) {
+            translatedPhrase += " / ";
+        }
     });
 
     return translatedPhrase;
 }
-
-console.log(englishToMorse("hello how are you"));
